@@ -66,19 +66,3 @@
     owner: vagrant
     group: vagrant
     mode: 0600
-
-# Take back eth0
-- name: Remove RedHat interface persistence (step 1).
-  command: >
-    rm -f /etc/udev/rules.d/70-persistent-net.rules
-    warn=false
-  tags: ['skip_ansible_lint']
-
-- name: Remove RedHat interface persistence (step 2).
-  lineinfile:
-    dest: /etc/sysconfig/network-scripts/ifcfg-eth0
-    regexp: "{{ item }}"
-    state: absent
-  with_items:
-    - '^HWADDR'
-    - '^UUID'
